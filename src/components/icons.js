@@ -1,0 +1,33 @@
+import {
+  Fence,
+  AlignVerticalJustifyEnd,
+  TrendingUp,
+  Box,
+  Armchair,
+  Wrench,
+  Sparkles,
+  Shield,
+  Settings,
+  Handshake,
+  MessageSquareText,
+  FileText,
+  Flame,
+  CircleCheckBig,
+} from 'lucide-react'
+
+export const ICONS = {
+  Fence,
+  AlignVerticalJustifyEnd,
+  TrendingUp,
+  Box,
+  Armchair,
+  Wrench,
+  Sparkles,
+  Shield,
+  Settings,
+  Handshake,
+  MessageSquareText,
+  FileText,
+  Flame,
+  CircleCheckBig,
+}
