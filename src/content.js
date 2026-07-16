@@ -41,12 +41,12 @@ export const ABOUT = {
 
 export const SERVICES = [
   { icon: 'Fence', label: 'Portones y accesos' },
-  { icon: 'AlignVerticalJustifyEnd', label: 'Rejas y cerramientos' },
+  { icon: 'Columns3', label: 'Rejas y cerramientos' },
   { icon: 'TrendingUp', label: 'Escaleras y barandas' },
-  { icon: 'Box', label: 'Estructuras metálicas' },
+  { icon: 'Warehouse', label: 'Estructuras metálicas' },
   { icon: 'Armchair', label: 'Muebles industriales' },
   { icon: 'Wrench', label: 'Reparaciones y refuerzos' },
-  { icon: 'Sparkles', label: 'Trabajos personalizados' },
+  { icon: 'PencilRuler', label: 'Trabajos personalizados' },
 ]
 
 // image: placeholders tipo blueprint — reemplazar por fotos reales de los trabajos.

@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
-import { WORKS, WHATSAPP_LINK } from '../content.js'
+import { WORKS, BRAND } from '../content.js'
 
 export default function Works() {
   const trackRef = useRef(null)
@@ -24,7 +24,7 @@ export default function Works() {
               Proyectos que hablan por sí solos
             </h2>
           </div>
-          <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer" className="btn-ghost">
+          <a href={BRAND.instagramUrl} target="_blank" rel="noreferrer" className="btn-ghost">
             Ver todos los trabajos
             <ArrowRight size={15} />
           </a>

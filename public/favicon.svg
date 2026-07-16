@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="13" fill="#0a0a0a"/>
+  <!-- swoosh diagonal del logo NM -->
+  <path d="M10 56 L52 8 L58 12 L24 58 Z" fill="#ff6700"/>
+  <path d="M14 44 L14 20 L20 20 L32 36 L32 20 L37 20 L37 44 L31 44 L20 29 L20 44 Z" fill="#f4f4f2" opacity="0.95"/>
+</svg>

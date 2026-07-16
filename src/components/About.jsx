@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { ABOUT, WHATSAPP_LINK } from '../content.js'
+import { ABOUT } from '../content.js'
 
 export default function About() {
   return (
@@ -42,7 +42,7 @@ export default function About() {
             {ABOUT.title}
           </h2>
           <p className="mt-6 max-w-lg leading-relaxed text-steel">{ABOUT.copy}</p>
-          <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer" className="btn-ghost mt-9">
+          <a href="#servicios" className="btn-ghost mt-9">
             Conocer más
             <ArrowRight size={15} />
           </a>

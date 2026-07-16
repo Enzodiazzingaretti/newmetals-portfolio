@@ -1,10 +1,9 @@
 import { useEffect, useRef } from 'react'
 
-// Escena de soldadura en canvas sobre fondo negro: un perfil metálico apenas
-// iluminado por el arco, el electrodo que baja en diagonal, humo tenue y
-// chispas balísticas que se enfrían (blanco → amarillo → naranja → rojo),
-// crepitan partiéndose en astillas y rebotan contra el metal.
-// Todo lo luminoso se dibuja en modo aditivo ('lighter').
+// Punto de soldadura en canvas sobre fondo negro: arco que pulsa, humo tenue,
+// reflejo cálido sobre la superficie implícita y chispas balísticas que se
+// enfrían (blanco → amarillo → naranja → rojo), crepitan partiéndose en
+// astillas y rebotan. Todo lo luminoso se dibuja en modo aditivo ('lighter').
 export default function SparkCanvas() {
   const canvasRef = useRef(null)
 
@@ -109,41 +108,19 @@ export default function SparkCanvas() {
         ctx.fillRect(s.x - s.r, s.y - s.r, s.r * 2, s.r * 2)
       }
 
-      // perfil metálico (mesa de trabajo): visible solo cerca del arco
-      const beamH = 12
-      const lit = ctx.createLinearGradient(x - 380, 0, x + 380, 0)
-      lit.addColorStop(0, 'rgba(38,28,18,0)')
-      lit.addColorStop(0.5, `rgba(58,40,24,${0.35 + weld * 0.5})`)
-      lit.addColorStop(1, 'rgba(38,28,18,0)')
-      ctx.fillStyle = lit
-      ctx.fillRect(x - 380, y, 760, beamH)
-      // canto superior que refleja el arco
-      const edge = ctx.createLinearGradient(x - 300, 0, x + 300, 0)
-      edge.addColorStop(0, 'rgba(255,150,60,0)')
-      edge.addColorStop(0.5, `rgba(255,190,110,${0.25 + weld * 0.55})`)
-      edge.addColorStop(1, 'rgba(255,150,60,0)')
-      ctx.fillStyle = edge
-      ctx.fillRect(x - 300, y - 1.5, 600, 2.5)
-
-      // electrodo: baja en diagonal hasta el arco, con leve pulso de mano
-      const sway = Math.sin(t * 0.02) * 3
-      ctx.strokeStyle = 'rgba(30,26,22,0.95)'
-      ctx.lineWidth = 7
-      ctx.lineCap = 'round'
-      ctx.beginPath()
-      ctx.moveTo(x + 120 + sway, y - 150)
-      ctx.lineTo(x + 10, y - 8)
-      ctx.stroke()
-      // punta al rojo por el calor
-      ctx.strokeStyle = `rgba(255,120,40,${0.35 + weld * 0.5})`
-      ctx.lineWidth = 3
-      ctx.beginPath()
-      ctx.moveTo(x + 34, y - 36)
-      ctx.lineTo(x + 8, y - 7)
-      ctx.stroke()
-
       // ---- capa luminosa (aditiva) ----
       ctx.globalCompositeOperation = 'lighter'
+
+      // reflejo del arco sobre la superficie implícita (elipse achatada)
+      ctx.save()
+      ctx.translate(x, y + 5)
+      ctx.scale(1, 0.24)
+      const pool = ctx.createRadialGradient(0, 0, 0, 0, 0, 120)
+      pool.addColorStop(0, `rgba(255,170,70,${0.08 + 0.2 * weld})`)
+      pool.addColorStop(1, 'rgba(255,103,0,0)')
+      ctx.fillStyle = pool
+      ctx.fillRect(-120, -120, 240, 240)
+      ctx.restore()
 
       // halo cálido + núcleo blanco del arco
       const r = 60 + weld * 110
@@ -179,8 +156,8 @@ export default function SparkCanvas() {
           p.life -= 0.08
         }
 
-        // rebote contra el perfil metálico
-        if (p.vy > 0 && p.y >= y && p.y <= y + beamH + 2 && Math.abs(p.x - x) < 380) {
+        // rebote contra la superficie implícita
+        if (p.vy > 0 && p.y >= y && p.y <= y + 14 && Math.abs(p.x - x) < 380) {
           if (Math.abs(p.vy) < 1.2) {
             sparks.splice(i, 1)
             continue
