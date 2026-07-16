@@ -1,0 +1,51 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Montaje e instalación en obra">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#191614"/>
+      <stop offset="1" stop-color="#0c0b0a"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="0.32" cy="0.62" r="0.5">
+      <stop offset="0" stop-color="#ff8a1e" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ff6700" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect width="800" height="600" fill="url(#grid)"/>
+  <!-- muro (hatch) a la izquierda + piso -->
+  <g stroke="#6f6c66" stroke-width="2" opacity="0.6">
+    <line x1="120" y1="80" x2="120" y2="520"/>
+    <line x1="120" y1="120" x2="150" y2="90"/>
+    <line x1="120" y1="180" x2="150" y2="150"/>
+    <line x1="120" y1="240" x2="150" y2="210"/>
+    <line x1="120" y1="300" x2="150" y2="270"/>
+    <line x1="120" y1="360" x2="150" y2="330"/>
+    <line x1="120" y1="420" x2="150" y2="390"/>
+  </g>
+  <line x1="120" y1="500" x2="740" y2="500" stroke="#8f8d88" stroke-width="4"/>
+  <!-- poste montado + platina amurada -->
+  <g fill="none" stroke="#c2c0ba" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="420" y1="500" x2="420" y2="150"/>
+    <rect x="392" y="150" width="56" height="40"/>
+    <line x1="240" y1="230" x2="420" y2="230"/>
+    <line x1="240" y1="360" x2="420" y2="360"/>
+  </g>
+  <!-- platina de anclaje al muro con bulones -->
+  <rect x="122" y="300" width="60" height="90" fill="none" stroke="#c2c0ba" stroke-width="5"/>
+  <g fill="#ff6700">
+    <circle cx="140" cy="322" r="5"/>
+    <circle cx="164" cy="322" r="5"/>
+    <circle cx="140" cy="368" r="5"/>
+    <circle cx="164" cy="368" r="5"/>
+  </g>
+  <rect width="800" height="600" fill="url(#glow)"/>
+  <!-- chispas de amolado en la base del poste -->
+  <g stroke="#ffb347" stroke-width="3" stroke-linecap="round" opacity="0.85">
+    <line x1="420" y1="495" x2="470" y2="470"/>
+    <line x1="420" y1="495" x2="480" y2="500"/>
+    <line x1="420" y1="495" x2="465" y2="515"/>
+    <line x1="420" y1="495" x2="455" y2="455"/>
+  </g>
+</svg>

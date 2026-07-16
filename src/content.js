@@ -16,6 +16,12 @@ export const WHATSAPP_LINK = `https://wa.me/${BRAND.whatsapp}?text=${encodeURICo
   'Hola! Quiero pedir un presupuesto.',
 )}`
 
+// Link de WhatsApp con el nombre del trabajo ya escrito en el mensaje.
+export const workWhatsappLink = (title) =>
+  `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(
+    `Hola! Me interesa un trabajo como "${title}". ¿Me pasás más información?`,
+  )}`
+
 export const NAV_LINKS = [
   { label: 'Inicio', href: '#inicio' },
   { label: 'Sobre nosotros', href: '#nosotros' },
@@ -49,13 +55,92 @@ export const SERVICES = [
   { icon: 'PencilRuler', label: 'Trabajos personalizados' },
 ]
 
-// image: placeholders tipo blueprint — reemplazar por fotos reales de los trabajos.
+// Cada trabajo abre un modal de detalle. `image` es la portada; `gallery` son
+// las fotos del detalle (hoy placeholders blueprint — reemplazar por fotos
+// reales). `description` y `specs` son contenido conceptual de muestra:
+// confirmar los datos reales con Gabriel.
 export const WORKS = [
-  { title: 'Portón corredizo', meta: 'Acero · Mendoza', image: '/assets/works/porton.svg' },
-  { title: 'Escalera metálica', meta: 'Hierro · Interior', image: '/assets/works/escalera.svg' },
-  { title: 'Estructura pérgola', meta: 'Acero · Exterior', image: '/assets/works/pergola.svg' },
-  { title: 'Mesa industrial', meta: 'Hierro y Madera', image: '/assets/works/mesa.svg' },
-  { title: 'Baranda metálica', meta: 'Hierro · Exterior', image: '/assets/works/baranda.svg' },
+  {
+    id: 'porton-corredizo',
+    title: 'Portón corredizo',
+    meta: 'Acero · Mendoza',
+    image: '/assets/works/porton.svg',
+    gallery: ['/assets/works/porton.svg', '/assets/works/detalle.svg', '/assets/works/montaje.svg'],
+    description:
+      'Portón corredizo de acero fabricado a medida para el ingreso de una vivienda. Estructura de caño estructural con chapa plegada, pensada para uso diario y preparada para automatización.',
+    specs: [
+      { label: 'Material', value: 'Caño estructural + chapa plegada' },
+      { label: 'Medidas', value: '4,00 × 2,10 m (a medida)' },
+      { label: 'Terminación', value: 'Antióxido + esmalte sintético negro' },
+      { label: 'Sistema', value: 'Riel inferior con rodamientos reforzados' },
+      { label: 'Preparado para', value: 'Motor corredizo (automatización)' },
+      { label: 'Plazo estimado', value: '3 a 4 semanas' },
+    ],
+  },
+  {
+    id: 'escalera-metalica',
+    title: 'Escalera metálica',
+    meta: 'Hierro · Interior',
+    image: '/assets/works/escalera.svg',
+    gallery: ['/assets/works/escalera.svg', '/assets/works/detalle.svg', '/assets/works/montaje.svg'],
+    description:
+      'Escalera interior con estructura de perfil UPN y planchuela. Escalones aptos para revestir en madera y baranda de caño con pasamanos, combinando resistencia y una estética industrial.',
+    specs: [
+      { label: 'Estructura', value: 'Perfil UPN + planchuela' },
+      { label: 'Escalones', value: 'Chapa antideslizante o apto madera' },
+      { label: 'Baranda', value: 'Caño redondo con pasamanos' },
+      { label: 'Terminación', value: 'Pintura epoxi gris grafito' },
+      { label: 'Plazo estimado', value: '2 a 3 semanas' },
+    ],
+  },
+  {
+    id: 'estructura-pergola',
+    title: 'Estructura pérgola',
+    meta: 'Acero · Exterior',
+    image: '/assets/works/pergola.svg',
+    gallery: ['/assets/works/pergola.svg', '/assets/works/detalle.svg', '/assets/works/montaje.svg'],
+    description:
+      'Pérgola de acero para exterior, con caño estructural y cubierta de listones metálicos. Tratada para intemperie y anclada con platinas, para dar sombra y carácter a patios y quinchos.',
+    specs: [
+      { label: 'Material', value: 'Caño estructural 100 × 100' },
+      { label: 'Cubierta', value: 'Listones metálicos / policarbonato opcional' },
+      { label: 'Tratamiento', value: 'Galvanizado en frío + esmalte exterior' },
+      { label: 'Medidas', value: '3 × 4 m (a medida)' },
+      { label: 'Anclaje', value: 'Platinas con brocas químicas' },
+    ],
+  },
+  {
+    id: 'mesa-industrial',
+    title: 'Mesa industrial',
+    meta: 'Hierro y Madera',
+    image: '/assets/works/mesa.svg',
+    gallery: ['/assets/works/mesa.svg', '/assets/works/detalle.svg', '/assets/works/montaje.svg'],
+    description:
+      'Mesa de estilo industrial que combina una estructura de hierro con tapa de madera maciza. Una pieza robusta y cálida a la vez, ideal para comedores, oficinas o locales.',
+    specs: [
+      { label: 'Estructura', value: 'Caño 40 × 40 estilo industrial' },
+      { label: 'Tapa', value: 'Madera maciza / paraíso lustrado' },
+      { label: 'Terminación', value: 'Hierro negro mate o con óxido sellado' },
+      { label: 'Medidas', value: '1,60 × 0,80 m (a medida)' },
+      { label: 'Plazo estimado', value: '2 semanas' },
+    ],
+  },
+  {
+    id: 'baranda-metalica',
+    title: 'Baranda metálica',
+    meta: 'Hierro · Exterior',
+    image: '/assets/works/baranda.svg',
+    gallery: ['/assets/works/baranda.svg', '/assets/works/detalle.svg', '/assets/works/montaje.svg'],
+    description:
+      'Baranda de hierro para balcón o escalera exterior, con diseño de barrotes horizontales. Cumple la altura reglamentaria y se termina galvanizada para resistir la intemperie.',
+    specs: [
+      { label: 'Material', value: 'Caño y planchuela' },
+      { label: 'Diseño', value: 'Barrotes horizontales (a medida)' },
+      { label: 'Altura', value: '1,00 m (reglamentaria)' },
+      { label: 'Terminación', value: 'Galvanizado + esmalte' },
+      { label: 'Anclaje', value: 'Amurado o con platina' },
+    ],
+  },
 ]
 
 export const VALUES = {
