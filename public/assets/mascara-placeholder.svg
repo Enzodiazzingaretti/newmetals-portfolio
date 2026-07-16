@@ -1,0 +1,56 @@
+<svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Máscara de soldar pintada (placeholder)">
+  <defs>
+    <radialGradient id="bg" cx="0.5" cy="0.42" r="0.7">
+      <stop offset="0" stop-color="#211a15"/>
+      <stop offset="1" stop-color="#0a0908"/>
+    </radialGradient>
+    <radialGradient id="emberGlow" cx="0.5" cy="0.42" r="0.55">
+      <stop offset="0" stop-color="#ff6700" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ff6700" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shell" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d8d4c8"/>
+      <stop offset="1" stop-color="#8a857a"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect width="600" height="800" fill="url(#emberGlow)"/>
+  <!-- rising smoke hint -->
+  <g stroke="#ffffff" stroke-opacity="0.05" stroke-width="14" fill="none" stroke-linecap="round">
+    <path d="M180 250 C150 180 220 150 190 90"/>
+    <path d="M230 240 C210 190 260 160 240 110"/>
+  </g>
+  <!-- helmet shell -->
+  <path d="M300 150
+           C400 150 452 205 452 300
+           L452 470
+           C452 585 388 660 300 660
+           C212 660 148 585 148 470
+           L148 300
+           C148 205 200 150 300 150 Z"
+        fill="url(#shell)" stroke="#3a3630" stroke-width="6"/>
+  <!-- weathered speckle -->
+  <g fill="#6b6559" opacity="0.55">
+    <circle cx="230" cy="250" r="6"/><circle cx="360" cy="230" r="5"/>
+    <circle cx="410" cy="360" r="7"/><circle cx="190" cy="420" r="6"/>
+    <circle cx="330" cy="600" r="6"/><circle cx="270" cy="330" r="4"/>
+  </g>
+  <!-- viewing window -->
+  <rect x="196" y="250" width="208" height="96" rx="8" fill="#0c0c0c" stroke="#2a2622" stroke-width="6"/>
+  <rect x="210" y="264" width="180" height="68" rx="4" fill="#15181a"/>
+  <!-- painted grin (nod to Gabriel's mask) -->
+  <path d="M205 430 Q300 400 395 430 L380 470 Q300 452 220 470 Z" fill="#7a1414" stroke="#c95200" stroke-width="4"/>
+  <g stroke="#0a0908" stroke-width="5">
+    <line x1="235" y1="424" x2="230" y2="466"/>
+    <line x1="268" y1="418" x2="266" y2="470"/>
+    <line x1="300" y1="416" x2="300" y2="472"/>
+    <line x1="332" y1="418" x2="334" y2="470"/>
+    <line x1="365" y1="424" x2="370" y2="466"/>
+  </g>
+  <!-- caption -->
+  <text x="300" y="720" text-anchor="middle" fill="#8a857a" font-family="Oswald, Arial, sans-serif"
+        font-size="20" letter-spacing="3" font-weight="600">NEW METALS</text>
+  <text x="300" y="748" text-anchor="middle" fill="#5c574e" font-family="Arial, sans-serif" font-size="13" letter-spacing="1">
+    reemplazar por foto real · mascara.jpg
+  </text>
+</svg>

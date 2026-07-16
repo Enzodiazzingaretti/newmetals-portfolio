@@ -1,0 +1,40 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Soldadura de estructura metálica en el taller">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b1714"/>
+      <stop offset="1" stop-color="#0b0a09"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="spark" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffd79a" stop-opacity="0.95"/>
+      <stop offset="0.4" stop-color="#ff8a1e" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#ff6700" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect width="800" height="600" fill="url(#grid)"/>
+  <!-- I-beams meeting at a welded joint -->
+  <g fill="none" stroke="#b7b5af" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M120 300 L470 300 M120 270 L120 330 M470 250 L470 350"/>
+    <path d="M470 300 L680 470 M660 452 L698 488"/>
+  </g>
+  <!-- weld glow -->
+  <circle cx="470" cy="300" r="130" fill="url(#spark)"/>
+  <!-- sparks -->
+  <g stroke="#ffb347" stroke-width="3" stroke-linecap="round">
+    <line x1="470" y1="300" x2="540" y2="230"/>
+    <line x1="470" y1="300" x2="560" y2="300"/>
+    <line x1="470" y1="300" x2="540" y2="370"/>
+    <line x1="470" y1="300" x2="500" y2="210"/>
+    <line x1="470" y1="300" x2="420" y2="220"/>
+    <line x1="470" y1="300" x2="410" y2="360"/>
+  </g>
+  <g fill="#ffcf8a">
+    <circle cx="548" cy="222" r="4"/>
+    <circle cx="566" cy="300" r="3.5"/>
+    <circle cx="500" cy="204" r="3"/>
+    <circle cx="405" cy="366" r="3"/>
+  </g>
+</svg>

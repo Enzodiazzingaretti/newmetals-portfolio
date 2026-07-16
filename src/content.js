@@ -36,7 +36,7 @@ export const ABOUT = {
   kicker: 'Sobre nosotros',
   title: 'Diseñamos. Fabricamos. Construimos con fuerza.',
   copy: 'En New Metals transformamos ideas en estructuras reales. Trabajamos cada proyecto con compromiso, materiales de calidad y atención al detalle para garantizar resultados sólidos y duraderos.',
-  image: '', // foto del taller / escalera — dejar '' para placeholder
+  image: '/assets/taller.svg', // placeholder — reemplazar por foto real del taller
 }
 
 export const SERVICES = [
@@ -49,12 +49,13 @@ export const SERVICES = [
   { icon: 'Sparkles', label: 'Trabajos personalizados' },
 ]
 
+// image: placeholders tipo blueprint — reemplazar por fotos reales de los trabajos.
 export const WORKS = [
-  { title: 'Portón corredizo', meta: 'Acero · Mendoza', image: '' },
-  { title: 'Escalera metálica', meta: 'Hierro · Interior', image: '' },
-  { title: 'Estructura pérgola', meta: 'Acero · Exterior', image: '' },
-  { title: 'Mesa industrial', meta: 'Hierro y Madera', image: '' },
-  { title: 'Baranda metálica', meta: 'Hierro · Exterior', image: '' },
+  { title: 'Portón corredizo', meta: 'Acero · Mendoza', image: '/assets/works/porton.svg' },
+  { title: 'Escalera metálica', meta: 'Hierro · Interior', image: '/assets/works/escalera.svg' },
+  { title: 'Estructura pérgola', meta: 'Acero · Exterior', image: '/assets/works/pergola.svg' },
+  { title: 'Mesa industrial', meta: 'Hierro y Madera', image: '/assets/works/mesa.svg' },
+  { title: 'Baranda metálica', meta: 'Hierro · Exterior', image: '/assets/works/baranda.svg' },
 ]
 
 export const VALUES = {
@@ -62,7 +63,7 @@ export const VALUES = {
   titleTop: 'El esfuerzo',
   titleAccent: 'de hoy',
   titleBottom: 'construye tu mañana.',
-  maskImage: '/assets/mascara.jpg', // foto real de la máscara pintada — poner el archivo en public/assets/
+  maskImage: '/assets/mascara-placeholder.svg', // placeholder — reemplazar por la foto real: public/assets/mascara.jpg
   items: [
     { icon: 'Shield', label: 'Seguridad', sub: 'en cada detalle' },
     { icon: 'Settings', label: 'Calidad', sub: 'que se nota' },
