@@ -1,49 +1,26 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { VALUES } from '../content.js'
 import { ICONS } from './icons.js'
 
 // Sección identidad: la máscara de soldar pintada de Gabriel + lema del póster.
+// La foto (máscara a la izquierda, negro a la derecha) es el fondo full-bleed;
+// el texto ocupa el espacio oscuro de la derecha, como en el póster original.
 export default function Values() {
-  const [maskMissing, setMaskMissing] = useState(false)
-
   return (
     <section className="relative overflow-hidden border-t border-line bg-coal">
-      {/* brasa ambiental detrás de la máscara */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 45% 60% at 28% 55%, rgba(255,103,0,0.10), transparent 65%)',
-        }}
+      <img
+        src={VALUES.maskImage}
+        alt="Máscara de soldar pintada a mano, símbolo de New Metals"
+        className="absolute inset-0 h-full w-full object-cover object-[28%_center]"
       />
+      {/* legibilidad: velo suave en mobile, degradado hacia el texto en desktop */}
+      <div className="absolute inset-0 bg-coal/60 lg:bg-gradient-to-r lg:from-transparent lg:via-coal/15 lg:to-coal/70" />
+      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-coal to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-coal to-transparent" />
 
-      <div className="container-x relative grid items-center gap-14 py-24 lg:grid-cols-2 lg:py-32">
-        {/* la máscara */}
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8 }}
-          className="relative mx-auto w-full max-w-md"
-        >
-          {!maskMissing ? (
-            <img
-              src={VALUES.maskImage}
-              alt="Máscara de soldar pintada a mano, símbolo de New Metals"
-              onError={() => setMaskMissing(true)}
-              className="w-full object-contain drop-shadow-[0_0_60px_rgba(255,103,0,0.15)]"
-            />
-          ) : (
-            <div className="steel-placeholder flex aspect-[3/4] w-full items-center justify-center border border-line">
-              <p className="max-w-[220px] text-center text-xs leading-relaxed text-steel">
-                Foto de la máscara pintada
-                <br />
-                <span className="text-bone/60">public/assets/mascara.jpg</span>
-              </p>
-            </div>
-          )}
-        </motion.div>
+      <div className="container-x relative grid items-center gap-10 py-28 lg:min-h-[85vh] lg:grid-cols-2 lg:py-36">
+        {/* columna vacía: deja ver la máscara en desktop */}
+        <div className="hidden lg:block" />
 
         {/* lema + valores */}
         <div>
@@ -56,7 +33,7 @@ export default function Values() {
           >
             {VALUES.titleTop}{' '}
             <span className="text-ember">{VALUES.titleAccent}</span>
-            <span className="mt-2 block bg-bone px-3 py-1 text-coal w-fit">construye</span>
+            <span className="mt-2 block w-fit bg-bone px-3 py-1 text-coal">construye</span>
             <span className="block">tu mañana.</span>
           </motion.h2>
 

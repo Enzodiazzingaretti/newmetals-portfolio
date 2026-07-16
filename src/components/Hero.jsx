@@ -6,11 +6,17 @@ import SparkCanvas from './SparkCanvas.jsx'
 export default function Hero() {
   return (
     <section id="inicio" className="relative flex min-h-screen items-center overflow-hidden">
-      {/* fondo: chispas de soldadura + viñeta */}
+      {/* fondo: máscara de perfil + chispas de soldadura + viñeta */}
       <div className="absolute inset-0">
-        {!new URLSearchParams(window.location.search).has('nosparks') && <SparkCanvas />}
-        <div className="absolute inset-0 bg-gradient-to-r from-coal via-coal/80 to-coal/30" />
+        <img
+          src={HERO.image}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover object-[70%_center]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-coal via-coal/85 to-coal/20" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-coal to-transparent" />
+        {!new URLSearchParams(window.location.search).has('nosparks') && <SparkCanvas />}
       </div>
 
       <div className="container-x relative z-10 pb-24 pt-28">
