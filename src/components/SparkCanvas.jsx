@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
 
 // Chispas de soldadura: partículas que brotan de un punto de soldadura,
-// con gravedad y estela. Reemplaza la foto del hero hasta tener fotos reales.
+// con gravedad y estela. Además escribe la variable CSS --weld (0..1) en el
+// contenedor padre para que el fogonazo "revele" la máscara del hero.
 export default function SparkCanvas() {
   const canvasRef = useRef(null)
 
@@ -10,6 +11,7 @@ export default function SparkCanvas() {
     if (reduced) return
 
     const canvas = canvasRef.current
+    const host = canvas.parentElement
     const ctx = canvas.getContext('2d')
     let raf = 0
     let width = 0
@@ -28,7 +30,12 @@ export default function SparkCanvas() {
     resize()
     window.addEventListener('resize', resize)
 
-    const emitter = () => ({ x: width * 0.62, y: height * 0.58 })
+    // en pantallas chicas el texto ocupa todo el ancho: correr el punto de
+    // soldadura abajo a la derecha para no lavar el párrafo con el glow
+    const emitter = () =>
+      width < 640
+        ? { x: width * 0.78, y: height * 0.74 }
+        : { x: width * 0.56, y: height * 0.66 }
 
     const spawn = () => {
       const { x, y } = emitter()
@@ -45,21 +52,33 @@ export default function SparkCanvas() {
       })
     }
 
-    let flicker = 0
+    // fogonazo de soldadura: valor suavizado que persigue un objetivo aleatorio,
+    // con ráfagas intensas ocasionales — ilumina el glow, las chispas y la máscara
+    let weld = 0.5
+    let weldTarget = 0.5
+    let retarget = 0
     const tick = () => {
       ctx.clearRect(0, 0, width, height)
 
-      // punto de soldadura: núcleo brillante con flicker
+      if (--retarget <= 0) {
+        weldTarget = Math.random() < 0.22 ? 0.85 + Math.random() * 0.15 : 0.25 + Math.random() * 0.5
+        retarget = 6 + Math.floor(Math.random() * 22)
+      }
+      weld += (weldTarget - weld) * 0.12
+      host.style.setProperty('--weld', weld.toFixed(3))
+
+      // punto de soldadura: núcleo brillante que pulsa con el fogonazo
       const { x, y } = emitter()
-      flicker = 0.75 + Math.random() * 0.25
-      const glow = ctx.createRadialGradient(x, y, 0, x, y, 90)
-      glow.addColorStop(0, `rgba(255, 220, 160, ${0.55 * flicker})`)
-      glow.addColorStop(0.25, `rgba(255, 130, 30, ${0.28 * flicker})`)
+      const r = 70 + weld * 90
+      const glow = ctx.createRadialGradient(x, y, 0, x, y, r)
+      glow.addColorStop(0, `rgba(255, 224, 170, ${0.30 + 0.45 * weld})`)
+      glow.addColorStop(0.25, `rgba(255, 130, 30, ${0.15 + 0.28 * weld})`)
       glow.addColorStop(1, 'rgba(255, 103, 0, 0)')
       ctx.fillStyle = glow
-      ctx.fillRect(x - 90, y - 90, 180, 180)
+      ctx.fillRect(x - r, y - r, r * 2, r * 2)
 
-      for (let i = 0; i < 4; i++) spawn()
+      const births = weld > 0.7 ? 6 : weld > 0.4 ? 4 : 2
+      for (let i = 0; i < births; i++) spawn()
 
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i]
