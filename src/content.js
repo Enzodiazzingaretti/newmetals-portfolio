@@ -26,7 +26,6 @@ export const NAV_LINKS = [
 ]
 
 export const HERO = {
-  image: '/assets/hero-mask.jpg', // máscara pintada de Gabriel, vista de perfil
   kicker: ['Calidad', 'Resistencia', 'Precisión'],
   title: ['Fabricación y', 'soldadura', 'metálica a medida'],
   copy: 'Creamos estructuras metálicas pensadas para durar. Cada proyecto, hecho con compromiso y atención al detalle.',

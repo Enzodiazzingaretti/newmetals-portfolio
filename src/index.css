@@ -47,21 +47,6 @@ body {
   }
 }
 
-/* capa de la máscara del hero que el fogonazo de soldadura revela:
-   visible solo alrededor del punto de soldadura, con brillo cálido
-   que pulsa según --weld (0..1, escrita por SparkCanvas cada frame) */
-.weld-reveal {
-  opacity: var(--weld, 0.85);
-  filter: brightness(calc(0.75 + var(--weld, 0.85) * 0.55)) saturate(1.15);
-  -webkit-mask-image: radial-gradient(
-    ellipse 58% 72% at 63% 58%,
-    black 25%,
-    transparent 78%
-  );
-  mask-image: radial-gradient(ellipse 58% 72% at 63% 58%, black 25%, transparent 78%);
-  will-change: opacity, filter;
-}
-
 /* subtle weld-scratch texture over dark sections */
 .texture-weld {
   position: relative;

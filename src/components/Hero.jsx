@@ -10,23 +10,8 @@ export default function Hero() {
 
   return (
     <section id="inicio" className="relative flex min-h-screen items-center overflow-hidden">
-      {/* fondo: la máscara casi a oscuras, revelada por el fogonazo de la soldadura */}
-      <div className="absolute inset-0" style={{ '--weld': animated ? 0.5 : 0.85 }}>
-        {/* silueta apenas visible en la penumbra */}
-        <img
-          src={HERO.image}
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover object-[70%_center] opacity-25"
-        />
-        {/* capa revelada: brilla alrededor del punto de soldadura según --weld */}
-        <img
-          src={HERO.image}
-          alt=""
-          aria-hidden="true"
-          className="weld-reveal absolute inset-0 h-full w-full object-cover object-[70%_center]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-coal via-coal/85 to-coal/20" />
+      {/* fondo negro con la escena de soldadura dibujada en canvas */}
+      <div className="absolute inset-0">
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-coal to-transparent" />
         {animated && <SparkCanvas />}
       </div>

@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react'
 
-// Chispas de soldadura: partículas que brotan de un punto de soldadura,
-// con gravedad y estela. Además escribe la variable CSS --weld (0..1) en el
-// contenedor padre para que el fogonazo "revele" la máscara del hero.
+// Escena de soldadura en canvas sobre fondo negro: un perfil metálico apenas
+// iluminado por el arco, el electrodo que baja en diagonal, humo tenue y
+// chispas balísticas que se enfrían (blanco → amarillo → naranja → rojo),
+// crepitan partiéndose en astillas y rebotan contra el metal.
+// Todo lo luminoso se dibuja en modo aditivo ('lighter').
 export default function SparkCanvas() {
   const canvasRef = useRef(null)
 
@@ -11,12 +13,13 @@ export default function SparkCanvas() {
     if (reduced) return
 
     const canvas = canvasRef.current
-    const host = canvas.parentElement
     const ctx = canvas.getContext('2d')
     let raf = 0
     let width = 0
     let height = 0
-    const particles = []
+    let t = 0
+    const sparks = []
+    const smoke = []
 
     const resize = () => {
       const rect = canvas.parentElement.getBoundingClientRect()
@@ -32,76 +35,176 @@ export default function SparkCanvas() {
 
     // en pantallas chicas el texto ocupa todo el ancho: correr el punto de
     // soldadura abajo a la derecha para no lavar el párrafo con el glow
-    const emitter = () =>
+    const weldPoint = () =>
       width < 640
         ? { x: width * 0.78, y: height * 0.74 }
-        : { x: width * 0.56, y: height * 0.66 }
+        : { x: width * 0.6, y: height * 0.64 }
 
-    const spawn = () => {
-      const { x, y } = emitter()
-      const angle = -Math.PI / 2 + (Math.random() - 0.5) * 2.4
-      const speed = 1.5 + Math.random() * 4.5
-      particles.push({
+    const spawnSpark = (x, y, opts = {}) => {
+      if (sparks.length > 260) return
+      const angle = opts.angle ?? -Math.PI / 2 + (Math.random() - 0.5) * 2.6
+      const speed = opts.speed ?? 2 + Math.random() * 6
+      sparks.push({
         x,
         y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
-        life: 1,
-        decay: 0.008 + Math.random() * 0.02,
-        size: 0.6 + Math.random() * 1.6,
+        life: opts.life ?? 0.7 + Math.random() * 0.3,
+        decay: opts.decay ?? 0.006 + Math.random() * 0.018,
+        size: opts.size ?? 0.7 + Math.random() * 1.5,
       })
     }
 
-    // fogonazo de soldadura: valor suavizado que persigue un objetivo aleatorio,
-    // con ráfagas intensas ocasionales — ilumina el glow, las chispas y la máscara
+    // color según cuánto se enfrió la chispa (1 = recién salida del arco)
+    const sparkStroke = (life) => {
+      if (life > 0.75) return `rgba(255,252,235,${life})`
+      if (life > 0.5) return `rgba(255,214,120,${life})`
+      if (life > 0.25) return `rgba(255,138,40,${life})`
+      return `rgba(205,70,25,${life * 0.9})`
+    }
+
+    // flicker del arco: persigue objetivos aleatorios con ráfagas intensas
     let weld = 0.5
     let weldTarget = 0.5
     let retarget = 0
+
     const tick = () => {
+      t++
+      ctx.globalCompositeOperation = 'source-over'
       ctx.clearRect(0, 0, width, height)
 
+      const { x, y } = weldPoint()
+
       if (--retarget <= 0) {
-        weldTarget = Math.random() < 0.22 ? 0.85 + Math.random() * 0.15 : 0.25 + Math.random() * 0.5
-        retarget = 6 + Math.floor(Math.random() * 22)
+        weldTarget = Math.random() < 0.25 ? 0.85 + Math.random() * 0.15 : 0.2 + Math.random() * 0.55
+        retarget = 4 + Math.floor(Math.random() * 16)
       }
-      weld += (weldTarget - weld) * 0.12
-      host.style.setProperty('--weld', weld.toFixed(3))
+      weld += (weldTarget - weld) * 0.18
 
-      // punto de soldadura: núcleo brillante que pulsa con el fogonazo
-      const { x, y } = emitter()
-      const r = 70 + weld * 90
-      const glow = ctx.createRadialGradient(x, y, 0, x, y, r)
-      glow.addColorStop(0, `rgba(255, 224, 170, ${0.30 + 0.45 * weld})`)
-      glow.addColorStop(0.25, `rgba(255, 130, 30, ${0.15 + 0.28 * weld})`)
-      glow.addColorStop(1, 'rgba(255, 103, 0, 0)')
-      ctx.fillStyle = glow
-      ctx.fillRect(x - r, y - r, r * 2, r * 2)
-
-      const births = weld > 0.7 ? 6 : weld > 0.4 ? 4 : 2
-      for (let i = 0; i < births; i++) spawn()
-
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i]
-        p.x += p.vx
-        p.y += p.vy
-        p.vy += 0.07 // gravedad
-        p.vx *= 0.995
-        p.life -= p.decay
-        if (p.life <= 0 || p.y > height + 10) {
-          particles.splice(i, 1)
+      // humo: sube lento desde el punto de soldadura y se disipa
+      if (t % 14 === 0 && smoke.length < 12) {
+        smoke.push({
+          x: x + (Math.random() - 0.5) * 10,
+          y: y - 6,
+          r: 6 + Math.random() * 8,
+          vx: (Math.random() - 0.3) * 0.3,
+          vy: -(0.25 + Math.random() * 0.4),
+          a: 0.05 + Math.random() * 0.04,
+        })
+      }
+      for (let i = smoke.length - 1; i >= 0; i--) {
+        const s = smoke[i]
+        s.x += s.vx
+        s.y += s.vy
+        s.r += 0.35
+        s.a *= 0.992
+        if (s.a < 0.008 || s.y < -40) {
+          smoke.splice(i, 1)
           continue
         }
-        const warm = p.life > 0.55
-        ctx.strokeStyle = warm
-          ? `rgba(255, ${170 + Math.floor(60 * p.life)}, 80, ${p.life})`
-          : `rgba(255, 103, 0, ${p.life * 0.9})`
+        const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r)
+        g.addColorStop(0, `rgba(140,130,120,${s.a})`)
+        g.addColorStop(1, 'rgba(140,130,120,0)')
+        ctx.fillStyle = g
+        ctx.fillRect(s.x - s.r, s.y - s.r, s.r * 2, s.r * 2)
+      }
+
+      // perfil metálico (mesa de trabajo): visible solo cerca del arco
+      const beamH = 12
+      const lit = ctx.createLinearGradient(x - 380, 0, x + 380, 0)
+      lit.addColorStop(0, 'rgba(38,28,18,0)')
+      lit.addColorStop(0.5, `rgba(58,40,24,${0.35 + weld * 0.5})`)
+      lit.addColorStop(1, 'rgba(38,28,18,0)')
+      ctx.fillStyle = lit
+      ctx.fillRect(x - 380, y, 760, beamH)
+      // canto superior que refleja el arco
+      const edge = ctx.createLinearGradient(x - 300, 0, x + 300, 0)
+      edge.addColorStop(0, 'rgba(255,150,60,0)')
+      edge.addColorStop(0.5, `rgba(255,190,110,${0.25 + weld * 0.55})`)
+      edge.addColorStop(1, 'rgba(255,150,60,0)')
+      ctx.fillStyle = edge
+      ctx.fillRect(x - 300, y - 1.5, 600, 2.5)
+
+      // electrodo: baja en diagonal hasta el arco, con leve pulso de mano
+      const sway = Math.sin(t * 0.02) * 3
+      ctx.strokeStyle = 'rgba(30,26,22,0.95)'
+      ctx.lineWidth = 7
+      ctx.lineCap = 'round'
+      ctx.beginPath()
+      ctx.moveTo(x + 120 + sway, y - 150)
+      ctx.lineTo(x + 10, y - 8)
+      ctx.stroke()
+      // punta al rojo por el calor
+      ctx.strokeStyle = `rgba(255,120,40,${0.35 + weld * 0.5})`
+      ctx.lineWidth = 3
+      ctx.beginPath()
+      ctx.moveTo(x + 34, y - 36)
+      ctx.lineTo(x + 8, y - 7)
+      ctx.stroke()
+
+      // ---- capa luminosa (aditiva) ----
+      ctx.globalCompositeOperation = 'lighter'
+
+      // halo cálido + núcleo blanco del arco
+      const r = 60 + weld * 110
+      const halo = ctx.createRadialGradient(x, y, 0, x, y, r)
+      halo.addColorStop(0, `rgba(255,190,90,${0.1 + 0.3 * weld})`)
+      halo.addColorStop(1, 'rgba(255,103,0,0)')
+      ctx.fillStyle = halo
+      ctx.fillRect(x - r, y - r, r * 2, r * 2)
+
+      const core = ctx.createRadialGradient(x, y - 2, 0, x, y - 2, 16)
+      core.addColorStop(0, `rgba(255,255,250,${0.5 + weld * 0.5})`)
+      core.addColorStop(0.4, `rgba(255,230,170,${0.2 + weld * 0.35})`)
+      core.addColorStop(1, 'rgba(255,190,90,0)')
+      ctx.fillStyle = core
+      ctx.fillRect(x - 16, y - 18, 32, 32)
+
+      // nacen chispas según la intensidad del arco
+      const births = weld > 0.75 ? 7 : weld > 0.45 ? 3 : 1
+      for (let i = 0; i < births; i++) spawnSpark(x, y - 2)
+
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const p = sparks[i]
+        p.x += p.vx
+        p.y += p.vy
+        p.vy += 0.085 // gravedad
+        p.vx *= 0.996
+        p.life -= p.decay
+
+        // crepitar: algunas chispas se parten en astillas más chicas
+        if (p.life > 0.35 && p.size > 0.9 && Math.random() < 0.012) {
+          for (let k = 0; k < 2; k++)
+            spawnSpark(p.x, p.y, { speed: 1 + Math.random() * 2.5, life: 0.35, decay: 0.03, size: 0.5 })
+          p.life -= 0.08
+        }
+
+        // rebote contra el perfil metálico
+        if (p.vy > 0 && p.y >= y && p.y <= y + beamH + 2 && Math.abs(p.x - x) < 380) {
+          if (Math.abs(p.vy) < 1.2) {
+            sparks.splice(i, 1)
+            continue
+          }
+          p.y = y - 0.5
+          p.vy *= -(0.35 + Math.random() * 0.2)
+          p.vx *= 0.75
+          p.life -= 0.12
+        }
+
+        if (p.life <= 0 || p.y > height + 12) {
+          sparks.splice(i, 1)
+          continue
+        }
+
+        ctx.strokeStyle = sparkStroke(p.life)
         ctx.lineWidth = p.size
         ctx.beginPath()
-        ctx.moveTo(p.x - p.vx * 2.2, p.y - p.vy * 2.2)
+        ctx.moveTo(p.x - p.vx * 2.4, p.y - p.vy * 2.4)
         ctx.lineTo(p.x, p.y)
         ctx.stroke()
       }
 
+      ctx.globalCompositeOperation = 'source-over'
       raf = requestAnimationFrame(tick)
     }
 
