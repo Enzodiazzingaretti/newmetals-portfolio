@@ -1,0 +1,8 @@
+# El sitio todavía tiene datos de muestra (teléfono e Instagram del mockup,
+# fichas técnicas de ejemplo). Hasta reemplazarlos por los reales de Gabriel
+# no conviene que los buscadores lo indexen.
+# Para publicarlo de verdad: borrá este archivo y el bloque "headers" de
+# vercel.json.
+
+User-agent: *
+Disallow: /
