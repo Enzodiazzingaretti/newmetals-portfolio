@@ -193,11 +193,21 @@ export default function EasterEgg({ open, onClose }) {
               {BIRTHDAY.message}
             </motion.p>
 
+            {/* el remate, con su propio tiempo para que caiga solo */}
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 3.4 }}
+              className="mx-auto mt-6 max-w-lg text-[13px] italic leading-relaxed text-ember/80"
+            >
+              {BIRTHDAY.postscript}
+            </motion.p>
+
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 3.3 }}
-              className="mt-7 font-display text-sm font-medium uppercase tracking-wider2 text-bone"
+              transition={{ duration: 0.8, delay: 4.1 }}
+              className="mt-8 font-display text-sm font-medium uppercase tracking-wider2 text-bone"
             >
               {BIRTHDAY.signature}
             </motion.p>
@@ -208,7 +218,7 @@ export default function EasterEgg({ open, onClose }) {
               aria-hidden="true"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.18 }}
-              transition={{ duration: 1.2, delay: 3.6 }}
+              transition={{ duration: 1.2, delay: 4.4 }}
               className="mx-auto mt-12 h-6 w-auto"
             />
           </div>

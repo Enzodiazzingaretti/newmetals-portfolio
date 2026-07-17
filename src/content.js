@@ -195,9 +195,10 @@ export const CONTACT = {
 // Editá libremente el mensaje y la firma.
 export const BIRTHDAY = {
   clicksToOpen: 3,
-  greeting: 'Feliz cumple',
+  greeting: 'Feliz cumpleaños',
   name: 'Gabriel',
   message:
-    'Este sitio es tu regalo. Lo armé para que New Metals se vea tan sólido como los trabajos que salen de tus manos. Que cada chispa siga construyendo lo que te propongas.',
+    'Armé este regalo para que New Metals se vea tan sólido como los trabajos que salen de tus manos. Que cada chispa siga construyendo lo que te propongas.',
+  postscript: 'PD: todavía me debés los banquitos del desayunador.',
   signature: '— Enzo',
 }
