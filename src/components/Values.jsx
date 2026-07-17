@@ -3,23 +3,43 @@ import { VALUES } from '../content.js'
 import { ICONS } from './icons.js'
 
 // Sección identidad: la máscara de soldar pintada de Gabriel + lema del póster.
-// La foto (máscara a la izquierda, negro a la derecha) es el fondo full-bleed;
-// el texto ocupa el espacio oscuro de la derecha, como en el póster original.
+// Desktop: la foto es fondo full-bleed; la máscara ocupa la izquierda y el texto
+// va sobre el espacio negro de la derecha, como en el póster original. La foto
+// se monta más ancha que la sección y corrida a la izquierda: a estos anchos
+// object-cover la ajusta al ancho exacto, así que object-position no la mueve.
+// Mobile: encimar texto sobre la foto tapaba la máscara, así que va apilado —
+// la máscara como bloque propio arriba y el texto abajo sobre negro.
 export default function Values() {
   return (
     <section className="relative overflow-hidden border-t border-line bg-coal">
+      {/* desktop: foto de fondo */}
       <img
         src={VALUES.maskImage}
         alt="Máscara de soldar pintada a mano, símbolo de New Metals"
-        className="absolute inset-0 h-full w-full object-cover object-[28%_center]"
+        className="absolute inset-y-0 -left-[12%] hidden h-full w-[115%] max-w-none object-cover lg:block"
       />
-      {/* legibilidad: velo suave en mobile, degradado hacia el texto en desktop */}
-      <div className="absolute inset-0 bg-coal/60 lg:bg-gradient-to-r lg:from-transparent lg:via-coal/15 lg:to-coal/70" />
-      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-coal to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-coal to-transparent" />
+      <div className="absolute inset-0 hidden lg:block lg:bg-gradient-to-r lg:from-transparent lg:via-coal/20 lg:to-coal/75" />
+      <div className="absolute inset-x-0 top-0 hidden h-24 bg-gradient-to-b from-coal to-transparent lg:block" />
+      <div className="absolute inset-x-0 bottom-0 hidden h-24 bg-gradient-to-t from-coal to-transparent lg:block" />
 
-      <div className="container-x relative grid items-center gap-10 py-28 lg:min-h-[85vh] lg:grid-cols-2 lg:py-36">
-        {/* columna vacía: deja ver la máscara en desktop */}
+      <div className="container-x relative grid items-center gap-12 py-20 sm:py-24 lg:min-h-[85vh] lg:grid-cols-2 lg:py-36">
+        {/* mobile/tablet: la máscara como bloque, a sangre y sin velo encima */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7 }}
+          className="relative -mx-5 overflow-hidden sm:-mx-8 lg:hidden"
+        >
+          <img
+            src={VALUES.maskImage}
+            alt="Máscara de soldar pintada a mano, símbolo de New Metals"
+            className="aspect-[4/5] w-full object-cover object-[24%_center] sm:aspect-[16/10] sm:object-[28%_center]"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-coal to-transparent" />
+        </motion.div>
+
+        {/* desktop: columna vacía que deja ver la máscara del fondo */}
         <div className="hidden lg:block" />
 
         {/* lema + valores */}
