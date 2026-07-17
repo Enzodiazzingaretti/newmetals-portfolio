@@ -188,3 +188,16 @@ export const CONTACT = {
   copy: 'Escribinos y hagámoslo realidad.',
   cta: 'Escribinos por WhatsApp',
 }
+
+// Easter egg de cumpleaños: el sitio es un regalo de Enzo para su hermano.
+// Se abre tocando la máscara pintada 3 veces (está escondido a propósito:
+// no hay cursor ni pista visual, así ningún cliente lo activa sin querer).
+// Editá libremente el mensaje y la firma.
+export const BIRTHDAY = {
+  clicksToOpen: 3,
+  greeting: 'Feliz cumple',
+  name: 'Gabriel',
+  message:
+    'Este sitio es tu regalo. Lo armé para que New Metals se vea tan sólido como los trabajos que salen de tus manos. Que cada chispa siga construyendo lo que te propongas.',
+  signature: '— Enzo',
+}

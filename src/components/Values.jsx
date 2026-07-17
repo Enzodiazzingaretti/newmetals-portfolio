@@ -1,6 +1,8 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { VALUES } from '../content.js'
+import { VALUES, BIRTHDAY } from '../content.js'
 import { ICONS } from './icons.js'
+import EasterEgg from './EasterEgg.jsx'
 
 // Sección identidad: la máscara de soldar pintada de Gabriel + lema del póster.
 // Desktop: la foto es fondo full-bleed; la máscara ocupa la izquierda y el texto
@@ -10,6 +12,27 @@ import { ICONS } from './icons.js'
 // Mobile: encimar texto sobre la foto tapaba la máscara, así que va apilado —
 // la máscara como bloque propio arriba y el texto abajo sobre negro.
 export default function Values() {
+  const [eggOpen, setEggOpen] = useState(false)
+  const taps = useRef(0)
+  const timer = useRef(0)
+
+  // toques seguidos sobre la máscara: se reinicia si pasan más de 1,2 s entre
+  // uno y otro, así solo lo abre quien lo busca a propósito
+  const tapMask = () => {
+    clearTimeout(timer.current)
+    taps.current += 1
+    if (taps.current >= BIRTHDAY.clicksToOpen) {
+      taps.current = 0
+      setEggOpen(true)
+      return
+    }
+    timer.current = setTimeout(() => {
+      taps.current = 0
+    }, 1200)
+  }
+
+  useEffect(() => () => clearTimeout(timer.current), [])
+
   return (
     <section className="relative overflow-hidden border-t border-line bg-coal">
       {/* desktop: foto de fondo */}
@@ -29,7 +52,8 @@ export default function Values() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7 }}
-          className="relative -mx-5 overflow-hidden sm:-mx-8 lg:hidden"
+          onClick={tapMask}
+          className="relative -mx-5 select-none overflow-hidden sm:-mx-8 lg:hidden"
         >
           <img
             src={VALUES.maskImage}
@@ -39,8 +63,9 @@ export default function Values() {
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-coal to-transparent" />
         </motion.div>
 
-        {/* desktop: columna vacía que deja ver la máscara del fondo */}
-        <div className="hidden lg:block" />
+        {/* desktop: columna vacía que deja ver la máscara del fondo. Como cae
+            justo encima de ella, hace de zona de toque del easter egg */}
+        <div className="hidden self-stretch lg:block" onClick={tapMask} aria-hidden="true" />
 
         {/* lema + valores */}
         <div>
@@ -88,6 +113,8 @@ export default function Values() {
           </div>
         </div>
       </div>
+
+      <EasterEgg open={eggOpen} onClose={() => setEggOpen(false)} />
     </section>
   )
 }
