@@ -34,6 +34,11 @@ export default function Services() {
               </motion.div>
             )
           })}
+          {/* rellenos: sin ellos las celdas sobrantes de la última fila muestran
+              el color de las divisorias como un bloque gris. 7 servicios →
+              faltan 1 celda a 2 columnas y 2 a 3 columnas; a 7 no falta ninguna */}
+          <div className="bg-coal lg:hidden" aria-hidden="true" />
+          <div className="hidden bg-coal sm:block lg:hidden" aria-hidden="true" />
         </div>
       </div>
     </section>

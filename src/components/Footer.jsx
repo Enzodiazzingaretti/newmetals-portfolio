@@ -39,14 +39,14 @@ export default function Footer() {
         </div>
 
         {/* CTA */}
-        <div className="border border-line bg-panel p-8">
+        <div className="border border-line bg-panel p-6 sm:p-8">
           <h3 className="font-display text-xl font-semibold uppercase text-bone">{CONTACT.title}</h3>
           <p className="mt-3 text-sm text-steel">{CONTACT.copy}</p>
           <a
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noreferrer"
-            className="btn-ember mt-6 text-xs"
+            className="btn-ember mt-6 whitespace-nowrap px-5 text-xs sm:px-7"
           >
             <MessageCircle size={15} />
             {CONTACT.cta}

@@ -53,6 +53,16 @@ body {
   }
 }
 
+/* grilla de plano técnico del hero: se desvanece hacia los bordes para que
+   sea textura y no un cuadriculado duro */
+.hero-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, black 15%, transparent 78%);
+  mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, black 15%, transparent 78%);
+}
+
 /* subtle weld-scratch texture over dark sections */
 .texture-weld {
   position: relative;

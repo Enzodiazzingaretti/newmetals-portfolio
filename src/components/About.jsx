@@ -30,12 +30,13 @@ export default function About() {
           transition={{ duration: 0.7, delay: 0.15 }}
           className="relative"
         >
-          {/* monograma NM de fondo */}
+          {/* monograma NM de fondo — solo en desktop, donde queda detrás del
+              texto; en mobile flotaba suelto al lado del botón */}
           <img
             src="/assets/logo-light.svg"
             alt=""
             aria-hidden="true"
-            className="pointer-events-none absolute -right-4 bottom-0 w-52 opacity-[0.06]"
+            className="pointer-events-none absolute -right-4 bottom-0 hidden w-52 opacity-[0.06] lg:block"
           />
           <p className="kicker mb-4">{ABOUT.kicker}</p>
           <h2 className="font-display text-3xl font-semibold uppercase leading-tight text-bone sm:text-4xl">
