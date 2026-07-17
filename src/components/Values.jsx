@@ -33,6 +33,39 @@ export default function Values() {
 
   useEffect(() => () => clearTimeout(timer.current), [])
 
+  // el día del cumple el mensaje se abre solo, con un respiro para que el sitio
+  // alcance a aparecer antes de la sorpresa. Una vez por sesión: si cierra y
+  // sigue navegando, no vuelve a saltar. ?cumple lo fuerza cualquier día.
+  // La bandera se marca al abrir y no al agendar: si se marcara antes, el
+  // doble montaje de StrictMode cancelaría el timer y el segundo pase saldría
+  // temprano por la bandera ya puesta, y no se abriría nunca.
+  useEffect(() => {
+    const forzado = new URLSearchParams(window.location.search).has('cumple')
+    const vista = () => {
+      try {
+        return !!sessionStorage.getItem('nm-cumple-visto')
+      } catch {
+        return false // sessionStorage bloqueado (modo privado): igual lo mostramos
+      }
+    }
+    if (!forzado) {
+      if (!BIRTHDAY.date) return
+      const hoy = new Date()
+      const mmdd = `${String(hoy.getMonth() + 1).padStart(2, '0')}-${String(hoy.getDate()).padStart(2, '0')}`
+      if (mmdd !== BIRTHDAY.date) return
+      if (vista()) return
+    }
+    const t = setTimeout(() => {
+      try {
+        sessionStorage.setItem('nm-cumple-visto', '1')
+      } catch {
+        /* no pasa nada: solo perdemos el "una vez por sesión" */
+      }
+      setEggOpen(true)
+    }, 1400)
+    return () => clearTimeout(t)
+  }, [])
+
   return (
     <section className="relative overflow-hidden border-t border-line bg-coal">
       {/* desktop: foto de fondo */}
