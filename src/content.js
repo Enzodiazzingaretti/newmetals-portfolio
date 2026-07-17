@@ -196,7 +196,7 @@ export const CONTACT = {
 export const BIRTHDAY = {
   clicksToOpen: 3,
   greeting: 'Feliz cumpleaños',
-  name: 'Gabriel',
+  name: 'Gabi',
   message:
     'Armé este regalo para que New Metals se vea tan sólido como los trabajos que salen de tus manos. Que cada chispa siga construyendo lo que te propongas.',
   postscript: 'PD: todavía me debés los banquitos del desayunador.',
