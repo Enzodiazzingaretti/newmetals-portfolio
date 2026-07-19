@@ -51,7 +51,7 @@ export default function Navbar() {
             type="button"
             aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
             onClick={() => setOpen((v) => !v)}
-            className="text-bone lg:hidden"
+            className="-mr-2.5 p-2.5 text-bone lg:hidden"
           >
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>

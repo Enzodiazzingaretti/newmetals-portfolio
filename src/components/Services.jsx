@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { SERVICES } from '../content.js'
+import { SERVICES, serviceWhatsappLink } from '../content.js'
 import { ICONS } from './icons.js'
 
 export default function Services() {
@@ -10,13 +10,19 @@ export default function Services() {
         <h2 className="font-display text-3xl font-semibold uppercase text-bone sm:text-4xl">
           ¿Qué hacemos?
         </h2>
+        <p className="mt-4 max-w-md text-sm text-steel">
+          Tocá un rubro y contanos qué necesitás por WhatsApp.
+        </p>
 
-        <div className="mt-14 grid grid-cols-2 gap-px bg-line sm:grid-cols-3 lg:grid-cols-7">
+        <div className="mt-12 grid grid-cols-2 gap-px bg-line sm:grid-cols-3 lg:grid-cols-7">
           {SERVICES.map((service, i) => {
             const Icon = ICONS[service.icon]
             return (
-              <motion.div
+              <motion.a
                 key={service.label}
+                href={serviceWhatsappLink(service.label)}
+                target="_blank"
+                rel="noreferrer"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
@@ -31,7 +37,7 @@ export default function Services() {
                 <span className="font-display text-xs font-medium uppercase tracking-wider2 text-bone/85">
                   {service.label}
                 </span>
-              </motion.div>
+              </motion.a>
             )
           })}
           {/* rellenos: sin ellos las celdas sobrantes de la última fila muestran

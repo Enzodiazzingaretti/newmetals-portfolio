@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 import { BIRTHDAY } from '../content.js'
+import useFocusTrap from './useFocusTrap.js'
 
 // Chispas cayendo detrás del mensaje: mismo lenguaje que el hero, pero
 // emitidas a lo ancho de la costura de soldadura en vez de un punto fijo.
@@ -121,6 +122,9 @@ function CooledText({ text, delay = 0, className = '', hot = '#fffdf5', cold = '
 }
 
 export default function EasterEgg({ open, onClose }) {
+  const dialogRef = useRef(null)
+  useFocusTrap(dialogRef, open)
+
   // cerrar con Esc y bloquear el scroll de fondo mientras está abierto
   useEffect(() => {
     if (!open) return
@@ -138,6 +142,7 @@ export default function EasterEgg({ open, onClose }) {
     <AnimatePresence>
       {open && (
         <motion.div
+          ref={dialogRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -155,7 +160,7 @@ export default function EasterEgg({ open, onClose }) {
             type="button"
             onClick={onClose}
             aria-label="Cerrar"
-            className="absolute right-5 top-5 z-10 text-steel transition-colors hover:text-ember"
+            className="absolute right-3 top-3 z-10 p-2.5 text-steel transition-colors hover:text-ember"
           >
             <X size={22} />
           </button>

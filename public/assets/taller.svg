@@ -15,26 +15,65 @@
   </defs>
   <rect width="800" height="600" fill="url(#bg)"/>
   <rect width="800" height="600" fill="url(#grid)"/>
-  <!-- I-beams meeting at a welded joint -->
-  <g fill="none" stroke="#b7b5af" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M120 300 L470 300 M120 270 L120 330 M470 250 L470 350"/>
-    <path d="M470 300 L680 470 M660 452 L698 488"/>
+
+  <!-- banco de trabajo -->
+  <g stroke="#8f8d88" stroke-width="5" stroke-linecap="round" fill="none">
+    <line x1="90" y1="420" x2="710" y2="420"/>
+    <line x1="90" y1="436" x2="710" y2="436"/>
+    <line x1="140" y1="436" x2="140" y2="540"/>
+    <line x1="660" y1="436" x2="660" y2="540"/>
+    <line x1="140" y1="490" x2="660" y2="490" stroke-opacity="0.5"/>
   </g>
-  <!-- weld glow -->
-  <circle cx="470" cy="300" r="130" fill="url(#spark)"/>
-  <!-- sparks -->
+
+  <!-- viga I sobre el banco (alzado) -->
+  <g stroke="#c2c0ba" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <line x1="150" y1="330" x2="440" y2="330"/>
+    <line x1="150" y1="410" x2="440" y2="410"/>
+    <line x1="165" y1="330" x2="165" y2="410"/>
+    <line x1="425" y1="330" x2="425" y2="410"/>
+  </g>
+  <!-- pieza que llega en diagonal a la junta -->
+  <g stroke="#c2c0ba" stroke-width="6" stroke-linecap="round" fill="none">
+    <line x1="440" y1="370" x2="640" y2="220"/>
+    <line x1="463" y1="392" x2="663" y2="242"/>
+    <line x1="640" y1="220" x2="663" y2="242"/>
+  </g>
+  <!-- prensa sargento sujetando la viga -->
+  <g stroke="#8f8d88" stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M300 300 L300 260 L336 260 L336 300"/>
+    <line x1="318" y1="260" x2="318" y2="236"/>
+    <circle cx="318" cy="228" r="8"/>
+  </g>
+
+  <!-- cotas de plano -->
+  <g stroke="#ff6700" stroke-width="2" stroke-opacity="0.55" fill="none">
+    <line x1="150" y1="470" x2="440" y2="470"/>
+    <line x1="150" y1="462" x2="150" y2="478"/>
+    <line x1="440" y1="462" x2="440" y2="478"/>
+  </g>
+  <g stroke="#ff6700" stroke-width="2" stroke-opacity="0.55" fill="none">
+    <line x1="720" y1="220" x2="720" y2="410"/>
+    <line x1="712" y1="220" x2="728" y2="220"/>
+    <line x1="712" y1="410" x2="728" y2="410"/>
+  </g>
+
+  <!-- junta soldada: glow + chispas -->
+  <circle cx="452" cy="381" r="120" fill="url(#spark)"/>
   <g stroke="#ffb347" stroke-width="3" stroke-linecap="round">
-    <line x1="470" y1="300" x2="540" y2="230"/>
-    <line x1="470" y1="300" x2="560" y2="300"/>
-    <line x1="470" y1="300" x2="540" y2="370"/>
-    <line x1="470" y1="300" x2="500" y2="210"/>
-    <line x1="470" y1="300" x2="420" y2="220"/>
-    <line x1="470" y1="300" x2="410" y2="360"/>
+    <line x1="452" y1="381" x2="522" y2="311"/>
+    <line x1="452" y1="381" x2="542" y2="381"/>
+    <line x1="452" y1="381" x2="518" y2="441"/>
+    <line x1="452" y1="381" x2="482" y2="291"/>
+    <line x1="452" y1="381" x2="402" y2="301"/>
+    <line x1="452" y1="381" x2="392" y2="441"/>
   </g>
   <g fill="#ffcf8a">
-    <circle cx="548" cy="222" r="4"/>
-    <circle cx="566" cy="300" r="3.5"/>
-    <circle cx="500" cy="204" r="3"/>
-    <circle cx="405" cy="366" r="3"/>
+    <circle cx="530" cy="303" r="4"/>
+    <circle cx="548" cy="381" r="3.5"/>
+    <circle cx="482" cy="285" r="3"/>
+    <circle cx="387" cy="447" r="3"/>
+    <circle cx="524" cy="447" r="3.5"/>
   </g>
+  <!-- cordón de soldadura en la junta -->
+  <path d="M440 366 q6 8 0 15 q8 6 12 14" stroke="#ffd79a" stroke-width="4" stroke-linecap="round" fill="none"/>
 </svg>

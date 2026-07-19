@@ -68,11 +68,16 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-10"
+          className="mt-10 flex flex-wrap items-center gap-4"
         >
           <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer" className="btn-ember">
             {HERO.cta}
             <ArrowRight size={16} />
+          </a>
+          {/* vía secundaria: quien no está listo para hablar, mira trabajos */}
+          <a href="#trabajos" className="btn-ghost">
+            Ver trabajos
+            <ArrowRight size={15} />
           </a>
         </motion.div>
 
@@ -81,7 +86,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.7 }}
-          className="mt-10 flex items-center gap-5 lg:hidden"
+          className="mt-8 flex items-center gap-3 lg:hidden"
         >
           <span className="font-display text-[11px] font-medium uppercase tracking-wider3 text-steel">
             Seguinos
@@ -92,7 +97,7 @@ export default function Hero() {
             target="_blank"
             rel="noreferrer"
             aria-label="Instagram"
-            className="text-steel transition-colors hover:text-ember"
+            className="flex h-11 w-11 items-center justify-center text-steel transition-colors hover:text-ember"
           >
             <Instagram size={18} />
           </a>
@@ -101,7 +106,7 @@ export default function Hero() {
             target="_blank"
             rel="noreferrer"
             aria-label="WhatsApp"
-            className="text-steel transition-colors hover:text-ember"
+            className="flex h-11 w-11 items-center justify-center text-steel transition-colors hover:text-ember"
           >
             <MessageCircle size={18} />
           </a>
@@ -127,7 +132,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1, duration: 0.8 }}
-        className="absolute right-6 top-1/2 z-10 hidden -translate-y-1/2 flex-col items-center gap-5 lg:flex"
+        className="absolute right-6 top-1/2 z-10 hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex"
       >
         <span
           className="font-display text-[11px] font-medium uppercase tracking-wider3 text-steel"
@@ -141,7 +146,7 @@ export default function Hero() {
           target="_blank"
           rel="noreferrer"
           aria-label="Instagram"
-          className="text-steel transition-colors hover:text-ember"
+          className="flex h-11 w-11 items-center justify-center text-steel transition-colors hover:text-ember"
         >
           <Instagram size={18} />
         </a>
@@ -150,7 +155,7 @@ export default function Hero() {
           target="_blank"
           rel="noreferrer"
           aria-label="WhatsApp"
-          className="text-steel transition-colors hover:text-ember"
+          className="flex h-11 w-11 items-center justify-center text-steel transition-colors hover:text-ember"
         >
           <MessageCircle size={18} />
         </a>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { X, MessageCircle } from 'lucide-react'
 import { workWhatsappLink } from '../content.js'
+import useFocusTrap from './useFocusTrap.js'
 
 // Modal de detalle de un trabajo: galería (foto principal + miniaturas),
 // descripción, ficha técnica y CTA de WhatsApp con el nombre del proyecto.
@@ -9,6 +10,7 @@ export default function WorkModal({ work, onClose }) {
   const [active, setActive] = useState(work.gallery?.[0] ?? work.image)
   const closeRef = useRef(null)
   const panelRef = useRef(null)
+  useFocusTrap(panelRef)
 
   // bloquear scroll del body + cerrar con Escape + foco inicial
   useEffect(() => {
@@ -62,7 +64,7 @@ export default function WorkModal({ work, onClose }) {
             type="button"
             onClick={onClose}
             aria-label="Cerrar"
-            className="shrink-0 border border-line p-2.5 text-bone/70 transition-colors hover:border-ember hover:text-ember"
+            className="shrink-0 border border-line p-3 text-bone/70 transition-colors hover:border-ember hover:text-ember"
           >
             <X size={20} />
           </button>
@@ -93,7 +95,7 @@ export default function WorkModal({ work, onClose }) {
                 ))}
               </div>
             )}
-            <p className="mt-3 text-[11px] italic text-steel/70">
+            <p className="mt-3 text-xs italic text-steel">
               Imágenes de referencia — próximamente fotos reales del trabajo.
             </p>
           </div>
@@ -118,9 +120,9 @@ export default function WorkModal({ work, onClose }) {
               href={workWhatsappLink(work.title)}
               target="_blank"
               rel="noreferrer"
-              className="btn-ember mt-8 w-full justify-center sm:w-auto"
+              className="btn-ember mt-8 w-full justify-center whitespace-nowrap px-5 sm:w-auto sm:px-7"
             >
-              <MessageCircle size={16} />
+              <MessageCircle size={16} className="shrink-0" />
               Consultar por este trabajo
             </a>
           </div>

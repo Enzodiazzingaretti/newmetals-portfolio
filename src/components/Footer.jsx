@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { Instagram, MapPin, Phone, Clock, MessageCircle } from 'lucide-react'
 import { BRAND, CONTACT, WHATSAPP_LINK } from '../content.js'
 
@@ -17,7 +18,7 @@ export default function Footer() {
           <ul className="space-y-3 text-sm text-steel">
             <li className="flex items-center gap-3">
               <Phone size={15} className="text-ember" />
-              <a href={`tel:${BRAND.phone.replace(/\s/g, '')}`} className="hover:text-bone">
+              <a href={`tel:${BRAND.phone.replace(/[\s-]/g, '')}`} className="hover:text-bone">
                 {BRAND.phone}
               </a>
             </li>
@@ -38,8 +39,30 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* CTA */}
-        <div className="border border-line bg-panel p-6 sm:p-8">
+        {/* CTA con borde que se "suelda" al entrar en viewport */}
+        <div className="relative border border-line bg-panel p-6 sm:p-8">
+          <svg
+            className="pointer-events-none absolute inset-0 h-full w-full"
+            fill="none"
+            aria-hidden="true"
+          >
+            <motion.rect
+              x="1"
+              y="1"
+              width="calc(100% - 2px)"
+              height="calc(100% - 2px)"
+              stroke="#ff6700"
+              strokeWidth="2"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 0.9 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{
+                pathLength: { duration: 1.6, ease: 'easeInOut', delay: 0.2 },
+                opacity: { duration: 0.3, delay: 0.2 },
+              }}
+              style={{ filter: 'drop-shadow(0 0 6px rgba(255,103,0,0.6))' }}
+            />
+          </svg>
           <h3 className="font-display text-xl font-semibold uppercase text-bone">{CONTACT.title}</h3>
           <p className="mt-3 text-sm text-steel">{CONTACT.copy}</p>
           <a

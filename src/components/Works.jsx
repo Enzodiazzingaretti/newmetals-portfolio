@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Plus } from 'lucide-react'
 import { WORKS, BRAND } from '../content.js'
@@ -7,6 +7,25 @@ import WorkModal from './WorkModal.jsx'
 export default function Works() {
   const trackRef = useRef(null)
   const [selected, setSelected] = useState(null)
+  // flechas deshabilitadas en los extremos del carrusel
+  const [ends, setEnds] = useState({ left: true, right: false })
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+    const update = () =>
+      setEnds({
+        left: track.scrollLeft <= 4,
+        right: track.scrollLeft >= track.scrollWidth - track.clientWidth - 4,
+      })
+    update()
+    track.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      track.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
 
   const scrollBy = (dir) => {
     const track = trackRef.current
@@ -82,16 +101,18 @@ export default function Works() {
             <button
               type="button"
               onClick={() => scrollBy(-1)}
+              disabled={ends.left}
               aria-label="Anterior"
-              className="border border-line p-3 text-bone/70 transition-colors hover:border-ember hover:text-ember"
+              className="border border-line p-3.5 text-bone/70 transition-colors hover:border-ember hover:text-ember disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-line disabled:hover:text-bone/70"
             >
               <ArrowLeft size={16} />
             </button>
             <button
               type="button"
               onClick={() => scrollBy(1)}
+              disabled={ends.right}
               aria-label="Siguiente"
-              className="border border-line p-3 text-bone/70 transition-colors hover:border-ember hover:text-ember"
+              className="border border-line p-3.5 text-bone/70 transition-colors hover:border-ember hover:text-ember disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-line disabled:hover:text-bone/70"
             >
               <ArrowRight size={16} />
             </button>

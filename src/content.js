@@ -1,12 +1,12 @@
 // Todo el contenido editable del sitio vive acá.
-// NOTA: teléfono / instagram son placeholders del mockup — reemplazar por los reales de Gabriel.
+// NOTA: el instagram y los horarios siguen siendo placeholders — confirmar con Gabi.
 
 export const BRAND = {
   name: 'New Metals',
   tagline: 'Fabricación y soldadura metálica a medida. Calidad, resistencia y precisión en cada proyecto.',
-  location: 'Mendoza, Argentina',
-  phone: '+54 9 261 123 4567',
-  whatsapp: '5492611234567',
+  location: 'Tupungato, Mendoza, Argentina',
+  phone: '+54 9 2615 26-4634',
+  whatsapp: '5492615264634',
   instagram: '@newmetals.ok',
   instagramUrl: 'https://instagram.com/newmetals.ok',
   hours: 'Lunes a Viernes · 8:00 - 18:00 hs',
@@ -20,6 +20,13 @@ export const WHATSAPP_LINK = `https://wa.me/${BRAND.whatsapp}?text=${encodeURICo
 export const workWhatsappLink = (title) =>
   `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(
     `Hola! Me interesa un trabajo como "${title}". ¿Me pasás más información?`,
+  )}`
+
+// Link de WhatsApp por rubro de servicio: cada item de "¿Qué hacemos?" abre
+// una consulta con el rubro ya escrito.
+export const serviceWhatsappLink = (label) =>
+  `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(
+    `Hola! Quiero consultar por: ${label.toLowerCase()}.`,
   )}`
 
 export const NAV_LINKS = [
