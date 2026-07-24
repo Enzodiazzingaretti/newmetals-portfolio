@@ -202,13 +202,14 @@ export const CONTACT = {
 // Editá libremente el mensaje y la firma.
 export const BIRTHDAY = {
   clicksToOpen: 3,
-  // Cumple de Gabi: 26 de julio. Ese día el mensaje se abre solo al entrar
+  // Cumple de Gabi: 26 de julio. Esos días el mensaje se abre solo al entrar
   // (una vez por sesión), sin necesidad de tocar nada. Formato 'MM-DD', sin
   // año, para que se repita todos los años. Se compara contra la fecha local
   // del visitante, que es justo lo que queremos: Gabi lo abre desde Mendoza.
-  // Poné date: null para desactivar la apertura automática.
+  // Se incluye el 25 además del 26 como margen por las dudas.
+  // Poné dates: [] (o null) para desactivar la apertura automática.
   // Para previsualizarlo cualquier día: agregá ?cumple a la URL.
-  date: '07-26',
+  dates: ['07-25', '07-26'],
   greeting: 'Feliz cumpleaños',
   name: 'Gabi',
   message:

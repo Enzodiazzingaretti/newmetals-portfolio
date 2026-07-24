@@ -49,10 +49,10 @@ export default function Values() {
       }
     }
     if (!forzado) {
-      if (!BIRTHDAY.date) return
+      if (!BIRTHDAY.dates || BIRTHDAY.dates.length === 0) return
       const hoy = new Date()
       const mmdd = `${String(hoy.getMonth() + 1).padStart(2, '0')}-${String(hoy.getDate()).padStart(2, '0')}`
-      if (mmdd !== BIRTHDAY.date) return
+      if (!BIRTHDAY.dates.includes(mmdd)) return
       if (vista()) return
     }
     const t = setTimeout(() => {
