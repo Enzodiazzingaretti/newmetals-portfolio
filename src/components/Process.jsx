@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion'
-import { PROCESS } from '../content.js'
+import { useContent } from '../ContentContext.jsx'
 import { ICONS } from './icons.js'
 
 export default function Process() {
+  const { process: PROCESS } = useContent()
   return (
     <section id="proceso" className="texture-weld relative border-t border-line bg-smoke">
       <div className="container-x py-24 lg:py-28">
@@ -12,7 +13,7 @@ export default function Process() {
         </h2>
 
         <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {PROCESS.steps.map((step, i) => {
+          {PROCESS.steps.filter((s) => s.enabled !== false).map((step, i, steps) => {
             const Icon = ICONS[step.icon]
             return (
               <motion.div
@@ -28,7 +29,7 @@ export default function Process() {
                   <span className="font-display text-3xl font-semibold text-ember">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  {i < PROCESS.steps.length - 1 && (
+                  {i < steps.length - 1 && (
                     <span className="hidden h-px flex-1 bg-gradient-to-r from-ember/60 to-transparent lg:block" />
                   )}
                 </div>

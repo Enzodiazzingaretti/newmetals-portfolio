@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Instagram, MessageCircle, Mouse } from 'lucide-react'
-import { HERO, WHATSAPP_LINK, BRAND } from '../content.js'
+import { waLink } from '../content.js'
+import { useContent } from '../ContentContext.jsx'
 import SparkCanvas from './SparkCanvas.jsx'
 
 export default function Hero() {
+  const { hero: HERO, brand: BRAND } = useContent()
+  const WHATSAPP_LINK = waLink(BRAND.whatsapp)
   const animated =
     !new URLSearchParams(window.location.search).has('nosparks') &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches

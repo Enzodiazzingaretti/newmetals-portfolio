@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion'
-import { Instagram, MapPin, Phone, Clock, MessageCircle } from 'lucide-react'
-import { BRAND, CONTACT, WHATSAPP_LINK } from '../content.js'
+import { Instagram, MapPin, Phone, Clock, MessageCircle, Flame } from 'lucide-react'
+import { waLink } from '../content.js'
+import { useContent } from '../ContentContext.jsx'
 
 export default function Footer() {
+  const { brand: BRAND, contact: CONTACT } = useContent()
+  const WHATSAPP_LINK = waLink(BRAND.whatsapp)
   return (
     <footer id="contacto" className="border-t border-line bg-coal">
       <div className="container-x grid gap-12 py-16 lg:grid-cols-3 lg:py-20">
@@ -77,8 +80,16 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-line py-5 text-center text-xs text-steel/70">
-        © {new Date().getFullYear()} {BRAND.name}. Todos los derechos reservados.
+      <div className="border-t border-line py-5 flex items-center justify-center gap-2 text-center text-xs text-steel/70">
+        <span>© {new Date().getFullYear()} {BRAND.name}. Todos los derechos reservados.</span>
+        <a
+          href="/admin"
+          aria-label="Panel de administración"
+          title="Panel"
+          className="inline-flex items-center text-steel/30 transition-colors hover:text-ember"
+        >
+          <Flame size={13} />
+        </a>
       </div>
     </footer>
   )

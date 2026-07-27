@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Plus } from 'lucide-react'
-import { WORKS, BRAND } from '../content.js'
+import { useContent } from '../ContentContext.jsx'
 import WorkModal from './WorkModal.jsx'
 
 export default function Works() {
+  const { works, brand: BRAND } = useContent()
+  const WORKS = works.filter((w) => w.enabled !== false)
   const trackRef = useRef(null)
   const [selected, setSelected] = useState(null)
   // flechas deshabilitadas en los extremos del carrusel

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { VALUES } from '../content.js'
+import { useContent } from '../ContentContext.jsx'
 import { ICONS } from './icons.js'
 
 // Sección identidad: la máscara de soldar pintada de Gabriel + lema del póster.
@@ -10,6 +10,7 @@ import { ICONS } from './icons.js'
 // Mobile: encimar texto sobre la foto tapaba la máscara, así que va apilado —
 // la máscara como bloque propio arriba y el texto abajo sobre negro.
 export default function Values() {
+  const { values: VALUES } = useContent()
   return (
     <section className="relative overflow-hidden border-t border-line bg-coal">
       {/* desktop: foto de fondo */}

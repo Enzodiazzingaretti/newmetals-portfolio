@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { X, MessageCircle } from 'lucide-react'
-import { workWhatsappLink } from '../content.js'
+import { workWaLink } from '../content.js'
+import { useContent } from '../ContentContext.jsx'
 import useFocusTrap from './useFocusTrap.js'
 
 // Modal de detalle de un trabajo: galería (foto principal + miniaturas),
 // descripción, ficha técnica y CTA de WhatsApp con el nombre del proyecto.
 export default function WorkModal({ work, onClose }) {
+  const { brand } = useContent()
+  const workWhatsappLink = (title) => workWaLink(brand.whatsapp, title)
   const [active, setActive] = useState(work.gallery?.[0] ?? work.image)
   const closeRef = useRef(null)
   const panelRef = useRef(null)

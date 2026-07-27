@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { ABOUT } from '../content.js'
+import { useContent } from '../ContentContext.jsx'
 
 export default function About() {
+  const { about: ABOUT } = useContent()
   return (
     <section id="nosotros" className="texture-weld relative border-t border-line bg-smoke">
       <div className="container-x grid items-center gap-12 py-24 lg:grid-cols-2 lg:py-32">

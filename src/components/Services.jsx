@@ -1,8 +1,12 @@
 import { motion } from 'framer-motion'
-import { SERVICES, serviceWhatsappLink } from '../content.js'
+import { serviceWaLink } from '../content.js'
+import { useContent } from '../ContentContext.jsx'
 import { ICONS } from './icons.js'
 
 export default function Services() {
+  const { services, brand } = useContent()
+  const SERVICES = services.filter((s) => s.enabled !== false)
+  const serviceWhatsappLink = (label) => serviceWaLink(brand.whatsapp, label)
   return (
     <section id="servicios" className="border-t border-line bg-coal">
       <div className="container-x py-24 lg:py-28">

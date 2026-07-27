@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Menu, X, MessageCircle } from 'lucide-react'
-import { NAV_LINKS, WHATSAPP_LINK } from '../content.js'
+import { waLink } from '../content.js'
+import { useContent } from '../ContentContext.jsx'
 
 export default function Navbar() {
+  const { nav: NAV_LINKS, brand } = useContent()
+  const WHATSAPP_LINK = waLink(brand.whatsapp)
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
