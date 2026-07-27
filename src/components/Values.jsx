@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { VALUES, BIRTHDAY } from '../content.js'
+import { VALUES } from '../content.js'
 import { ICONS } from './icons.js'
-import EasterEgg from './EasterEgg.jsx'
 
 // Sección identidad: la máscara de soldar pintada de Gabriel + lema del póster.
 // Desktop: la foto es fondo full-bleed; la máscara ocupa la izquierda y el texto
@@ -12,60 +10,6 @@ import EasterEgg from './EasterEgg.jsx'
 // Mobile: encimar texto sobre la foto tapaba la máscara, así que va apilado —
 // la máscara como bloque propio arriba y el texto abajo sobre negro.
 export default function Values() {
-  const [eggOpen, setEggOpen] = useState(false)
-  const taps = useRef(0)
-  const timer = useRef(0)
-
-  // toques seguidos sobre la máscara: se reinicia si pasan más de 1,2 s entre
-  // uno y otro, así solo lo abre quien lo busca a propósito
-  const tapMask = () => {
-    clearTimeout(timer.current)
-    taps.current += 1
-    if (taps.current >= BIRTHDAY.clicksToOpen) {
-      taps.current = 0
-      setEggOpen(true)
-      return
-    }
-    timer.current = setTimeout(() => {
-      taps.current = 0
-    }, 1200)
-  }
-
-  useEffect(() => () => clearTimeout(timer.current), [])
-
-  // el día del cumple el mensaje se abre solo, con un respiro para que el sitio
-  // alcance a aparecer antes de la sorpresa. Una vez por sesión: si cierra y
-  // sigue navegando, no vuelve a saltar. ?cumple lo fuerza cualquier día.
-  // La bandera se marca al abrir y no al agendar: si se marcara antes, el
-  // doble montaje de StrictMode cancelaría el timer y el segundo pase saldría
-  // temprano por la bandera ya puesta, y no se abriría nunca.
-  useEffect(() => {
-    const forzado = new URLSearchParams(window.location.search).has('cumple')
-    const vista = () => {
-      try {
-        return !!sessionStorage.getItem('nm-cumple-visto')
-      } catch {
-        return false // sessionStorage bloqueado (modo privado): igual lo mostramos
-      }
-    }
-    if (!forzado) {
-      if (!BIRTHDAY.dates || BIRTHDAY.dates.length === 0) return
-      const hoy = new Date()
-      const mmdd = `${String(hoy.getMonth() + 1).padStart(2, '0')}-${String(hoy.getDate()).padStart(2, '0')}`
-      if (!BIRTHDAY.dates.includes(mmdd)) return
-      if (vista()) return
-    }
-    const t = setTimeout(() => {
-      try {
-        sessionStorage.setItem('nm-cumple-visto', '1')
-      } catch {
-        /* no pasa nada: solo perdemos el "una vez por sesión" */
-      }
-      setEggOpen(true)
-    }, 1400)
-    return () => clearTimeout(t)
-  }, [])
-
   return (
     <section className="relative overflow-hidden border-t border-line bg-coal">
       {/* desktop: foto de fondo */}
@@ -85,7 +29,6 @@ export default function Values() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7 }}
-          onClick={tapMask}
           className="relative -mx-5 select-none overflow-hidden sm:-mx-8 lg:hidden"
         >
           <img
@@ -96,9 +39,8 @@ export default function Values() {
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-coal to-transparent" />
         </motion.div>
 
-        {/* desktop: columna vacía que deja ver la máscara del fondo. Como cae
-            justo encima de ella, hace de zona de toque del easter egg */}
-        <div className="hidden self-stretch lg:block" onClick={tapMask} aria-hidden="true" />
+        {/* desktop: columna vacía que deja ver la máscara del fondo */}
+        <div className="hidden self-stretch lg:block" aria-hidden="true" />
 
         {/* lema + valores */}
         <div>
@@ -146,8 +88,6 @@ export default function Values() {
           </div>
         </div>
       </div>
-
-      <EasterEgg open={eggOpen} onClose={() => setEggOpen(false)} />
     </section>
   )
 }

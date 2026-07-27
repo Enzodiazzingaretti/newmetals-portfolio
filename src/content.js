@@ -195,25 +195,3 @@ export const CONTACT = {
   copy: 'Escribinos y hagámoslo realidad.',
   cta: 'Escribinos por WhatsApp',
 }
-
-// Easter egg de cumpleaños: el sitio es un regalo de Enzo para su hermano.
-// Se abre tocando la máscara pintada 3 veces (está escondido a propósito:
-// no hay cursor ni pista visual, así ningún cliente lo activa sin querer).
-// Editá libremente el mensaje y la firma.
-export const BIRTHDAY = {
-  clicksToOpen: 3,
-  // Cumple de Gabi: 26 de julio. Esos días el mensaje se abre solo al entrar
-  // (una vez por sesión), sin necesidad de tocar nada. Formato 'MM-DD', sin
-  // año, para que se repita todos los años. Se compara contra la fecha local
-  // del visitante, que es justo lo que queremos: Gabi lo abre desde Mendoza.
-  // Se incluye el 25 además del 26 como margen por las dudas.
-  // Poné dates: [] (o null) para desactivar la apertura automática.
-  // Para previsualizarlo cualquier día: agregá ?cumple a la URL.
-  dates: ['07-25', '07-26'],
-  greeting: 'Feliz cumpleaños',
-  name: 'Gabi',
-  message:
-    'Armé este regalo para que New Metals se vea tan sólido como los trabajos que salen de tus manos. Que cada chispa siga construyendo lo que te propongas.',
-  postscript: 'PD: todavía me debés los banquitos del desayunador.',
-  signature: '— Enzo',
-}
